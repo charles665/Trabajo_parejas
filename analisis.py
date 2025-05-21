@@ -30,3 +30,17 @@ class Gestor_proyecto:
             return df.iloc[int(numero)].to_dict() #para ver los proyectos
         except (ValueError, IndexError):
             raise ValueError("Número de proyecto no válido.")
+        
+    def eliminar_proyecto(self, numero): 
+        df.self.cargar_todos()
+        try:
+            df = df.drop(int(numero)) #para eliminar un proyecto
+            df.to_csv(self.archivo, index=False) #para guardar el archivo
+        except (ValueError, IndexError):
+            raise ValueError("Número de proyecto no válido.")
+        
+    def actualizar_proyecto(self, dataframe): #para actualizar un proyecto
+        if isinstance(dataframe, pd.DataFrame):
+            dataframe.to_csv(self.archivo, index=False)
+        else:
+            raise ValueError("El argumento debe ser un DataFrame de pandas.")

@@ -83,9 +83,25 @@ def mostrar_eliminar():
              resultado.config(text="Ese proyecto no existe")
      tk.Button(ventana4, text="Eliminar", command=eliminar).pack()
 def mostrar_editar():
-    ventana5 = tk.Toplevel(ventana)
-    ventana5.title("ACTUALIZAR PROYECTOS")
-    ventana5.geometry("400x200")
+    ventana_edit = tk.Toplevel()
+    ventana_edit.title("Editar proyectos")
+    ventana_edit.geometry("500x300")
+    
+    datos = gestor.cargar_todos()
+    
+    texto = tk.Text(ventana_edit)
+    texto.pack(fill='both', expand=True)
+    texto.insert('1.0', datos.to_csv(index=False))
+    
+    def guardar():
+        try:
+            nuevo = pd.read_csv(io.StringIO(texto.get('1.0', 'end')))
+            gestor.actualizar_proyecto(nuevo)
+            ventana_edit.destroy()
+        except:
+            pass
+    
+    tk.Button(ventana_edit, text='Guardar', command=guardar).pack()
 
 
   
@@ -107,10 +123,10 @@ boton2.grid(row=0, column=1, padx=10, pady=10)
 boton3 = tk.Button(frame_botones, text="Mostrar proyecto", font=("Arial", 8), fg="black", bg="grey", width=12, command=mostrar_proyecto)
 boton3.grid(row=0, column=2, padx=10, pady=10)
 
-boton4 = tk.Button(frame_botones, text="Mostrar 4", font=("Arial", 12), fg="black", bg="grey", width=12, command=mostrar_eliminar)
+boton4 = tk.Button(frame_botones, text="Eliminar", font=("Arial", 12), fg="black", bg="grey", width=12, command=mostrar_eliminar)
 boton4.grid(row=0, column=3, padx=10, pady=10)
 
-boton5 = tk.Button(frame_botones, text="Mostrar 4", font=("Arial", 12), fg="black", bg="grey", width=12, command=mostrar_eliminar)
+boton5 = tk.Button(frame_botones, text="Editar", font=("Arial", 12), fg="black", bg="grey", width=12, command=mostrar_editar)
 boton5.grid(row=0, column=4, padx=10, pady=10)
 
 

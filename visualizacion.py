@@ -1,4 +1,3 @@
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import tkinter as tk
@@ -47,10 +46,36 @@ def mostrar_datos():
     df = gestor.cargar_todos()
 
     texto = tk.Text(ventana2, wrap='none')
-    texto.insert(tk.END, df.to_string(index=False))  # Convertimos el DataFrame en string bonito
+    texto.insert(tk.END, df.to_string(index=False))  
     texto.pack(padx=10, pady=10, fill='both', expand=True)
 
-     
+def mostrar_proyecto():
+
+    ventana3 = tk.Toplevel(ventana)
+    ventana3.title("Ver proyecto por número")
+    ventana3.geometry("400x200")
+
+    tk.Label(ventana3, text="Ingrese el número del proyecto:").pack(pady=10)
+    entry_numero = tk.Entry(ventana3)
+    entry_numero.pack(pady=5)
+
+    resultado = tk.Label(ventana3, text="")
+    resultado.pack(pady=10)
+
+    def buscar():
+        numero = entry_numero.get()
+        try:
+            proyecto = gestor.ver_proyectos(numero)
+            texto = ""
+            for clave, valor in proyecto.items():
+                texto += f"{clave}: {valor}\n"
+            resultado.config(text=texto, fg="black")
+        except:
+            resultado.config(text="Número de proyecto no válido")
+
+    tk.Button(ventana3, text="Buscar", command=buscar).pack(pady=5)
+
+
 
 def oe():
     print('hola')
@@ -60,7 +85,7 @@ ventana = tk.Tk()#inicio la ventana
 ventana.title("Pagina de proyectos")#El titulo
 ventana.geometry('800x500')#Tamaño
 
-## comezamos a porner bonetes
+## comezamos a porner botones
 frame_botones = tk.Frame(ventana, bg="white")
 frame_botones.pack(pady=10)
 
@@ -70,7 +95,7 @@ boton1.grid(row=0, column=0, padx=10, pady=10)
 boton2 = tk.Button(frame_botones, text="Mostrar datos", font=("Arial", 12), fg="black", bg="grey", width=12, command=mostrar_datos)
 boton2.grid(row=0, column=1, padx=10, pady=10)
 
-boton3 = tk.Button(frame_botones, text="Mostrar 3", font=("Arial", 12), fg="black", bg="grey", width=12, command=oe)
+boton3 = tk.Button(frame_botones, text="Mostrar proyecto", font=("Arial", 8), fg="black", bg="grey", width=12, command=mostrar_proyecto)
 boton3.grid(row=0, column=2, padx=10, pady=10)
 
 boton4 = tk.Button(frame_botones, text="Mostrar 4", font=("Arial", 12), fg="black", bg="grey", width=12, command=oe)

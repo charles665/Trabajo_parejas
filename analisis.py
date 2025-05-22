@@ -7,11 +7,12 @@ import random
 import math
 import pandas as pd
 import os
-import analisis
+
+
 class Gestor_proyecto:
     def __init__(self, archivo='proyecto.csv'):
         self.archivo = archivo
-        self.campos = ['id', 'nombre', 'angulo', 'resultado']
+        self.campos = ['id', 'nombre', 'angulo', 'resultado', 'longitud']
         if not os.path.isfile(self.archivo):
             with open(self.archivo, 'w', newline='') as f:
                 writer = csv.DictWriter(f, fieldnames=self.campos)
@@ -37,11 +38,12 @@ class Gestor_proyecto:
                 'nombre': nombre,
                 'angulo': round(angulo, 2),
                 'resultado': round(resultado, 2),
-                'Longitud': longitud,
+                'longitud': longitud,
             })
 
     def cargar_todos(self):
         return pd.read_csv(self.archivo)
+    
 
     def ver_proyectos(self, numero):
         df = self.cargar_todos()
